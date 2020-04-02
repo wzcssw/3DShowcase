@@ -12,7 +12,7 @@ var initThree = function(){
     renderer = new THREE.WebGLRenderer({ antialias: true });
     loader = new THREE.GLTFLoader();
 
-    scene.background = new THREE.Color(0xdddddd)
+    // scene.background = new THREE.Color(0xdddddd)
 
     orbit = new THREE.OrbitControls(camera, renderer.domElement)
 
@@ -24,19 +24,17 @@ var initThree = function(){
 
 window.onload = function(){
     initThree();
-
-    // 物体
-    var geometry = new THREE.CubeGeometry(1,1,1);
-    // var material = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
-    var material = new THREE.MeshLambertMaterial({color: 0xFFFF00});
-    // var cube = new THREE.Mesh(geometry, material);
     
-    // scene.add(cube);
-    // cube.position.set(5, 5, 5);
-    // cube.position.set(0, 0, 0);
+    camera.position.set(7, 7, 7);
+    camera.lookAt(0,0,0);
 
-    camera.position.set(200, 200, 200);
-    camera.lookAt(0,0,0)
+    // 地面
+    let geometryPlane = new THREE.PlaneGeometry(1000,1000);
+    let materialPlane = new THREE.MeshBasicMaterial({color: 0xA9A9A9});
+    let rect = new THREE.Mesh(geometryPlane,materialPlane);
+    rect.rotation.x = -1.58;
+    rect.position.set(0, 0, 0);
+    scene.add(rect);
 
     // 点光源
     pLight = new THREE.PointLight( 0xFFFFFF, 15, 300 );
@@ -74,15 +72,21 @@ window.onload = function(){
     })
     orbit.autoRotate = true
     orbit.autoRotateSpeed = 1
-    
+    orbit.dampingFactor = 0.01; 
+
+    loader.load('./models/garage/scene.gltf', function(gltf) {
+        scene.add(gltf.scene);
+        animate();
+    })
 
     loader.load('./models/bmw_m6/scene.gltf', function(gltf) {
+        gltf.scene.position.y = 0.7
+        gltf.scene.scale.set(.03,.03,.03) // 缩放模型
         scene.add(gltf.scene);
         animate();
     })
 
     var animate = function() {
-        // cube.rotation.y += 0.003
         orbit.update();
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
