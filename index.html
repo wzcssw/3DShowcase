@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>小车车</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="js/pace.min.js"></script>
+        <link rel="stylesheet" href="./css/page.css">
         <script src="js/three.min.js"></script>
         <script src="js/GLTFLoader.js"></script>
         <script src="js/OrbitControls.js"></script>
+        <script src="js/postprocessing.min.js"></script>
         <script src="js/main.js"></script>
         <style>
             body {margin: 0px;}
@@ -14,6 +18,9 @@
         </style>
     </head>
     <body>
+        <div class="nav" id="nav">
+            <div class="btn" onclick="tuggleRotation()">自动旋转</div>
+        </div>
     </body>
 </html>
 
